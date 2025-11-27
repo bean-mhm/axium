@@ -1,4 +1,5 @@
-// GitHub: https://github.com/bean-mhm/axium
+// axium 0.1.0
+// https://github.com/bean-mhm/axium
 //
 // axium (stylized as lowercase) is a single-header C++ math library providing
 // utility classes and functions for:
