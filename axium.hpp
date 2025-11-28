@@ -1,4 +1,4 @@
-// axium 0.4.0
+// axium 0.5.0
 // https://github.com/bean-mhm/axium
 //
 // axium (stylized as lowercase) is a single-header C++ math library providing
@@ -1594,6 +1594,16 @@ namespace axium
     }
 
     template<std::floating_point T>
+    constexpr Vec2<T> mix(
+        const Vec2<T>& v1,
+        const Vec2<T>& v2,
+        const Vec2<T>& a
+    )
+    {
+        return v1 + a * (v2 - v1);
+    }
+
+    template<std::floating_point T>
     constexpr Vec2<T> remap(
         const Vec2<T>& v,
         T a_start,
@@ -2308,6 +2318,16 @@ namespace axium
         const Vec3<T>& v1,
         const Vec3<T>& v2,
         T a
+    )
+    {
+        return v1 + a * (v2 - v1);
+    }
+
+    template<std::floating_point T>
+    constexpr Vec3<T> mix(
+        const Vec3<T>& v1,
+        const Vec3<T>& v2,
+        const Vec3<T>& a
     )
     {
         return v1 + a * (v2 - v1);
@@ -3104,6 +3124,16 @@ namespace axium
         const Vec4<T>& v1,
         const Vec4<T>& v2,
         T a
+    )
+    {
+        return v1 + a * (v2 - v1);
+    }
+
+    template<std::floating_point T>
+    constexpr Vec4<T> mix(
+        const Vec4<T>& v1,
+        const Vec4<T>& v2,
+        const Vec4<T>& a
     )
     {
         return v1 + a * (v2 - v1);
