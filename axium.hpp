@@ -1,4 +1,4 @@
-// axium 0.2.0
+// axium 0.3.0
 // https://github.com/bean-mhm/axium
 //
 // axium (stylized as lowercase) is a single-header C++ math library providing
@@ -1502,11 +1502,47 @@ namespace axium
     }
 
     template<typename T>
+    constexpr Vec2<T> min(const Vec2<T>& v1, T v2)
+    {
+        return Vec2<T>(
+            min(v1.x, v2),
+            min(v1.y, v2)
+        );
+    }
+
+    template<typename T>
+    constexpr Vec2<T> min(T v1, const Vec2<T>& v2)
+    {
+        return Vec2<T>(
+            min(v1, v2.x),
+            min(v1, v2.y)
+        );
+    }
+
+    template<typename T>
     constexpr Vec2<T> max(const Vec2<T>& v1, const Vec2<T>& v2)
     {
         return Vec2<T>(
             max(v1.x, v2.x),
             max(v1.y, v2.y)
+        );
+    }
+
+    template<typename T>
+    constexpr Vec2<T> max(const Vec2<T>& v1, T v2)
+    {
+        return Vec2<T>(
+            max(v1.x, v2),
+            max(v1.y, v2)
+        );
+    }
+
+    template<typename T>
+    constexpr Vec2<T> max(T v1, const Vec2<T>& v2)
+    {
+        return Vec2<T>(
+            max(v1, v2.x),
+            max(v1, v2.y)
         );
     }
 
@@ -2159,6 +2195,26 @@ namespace axium
     }
 
     template<typename T>
+    constexpr Vec3<T> min(const Vec3<T>& v1, T v2)
+    {
+        return Vec3<T>(
+            min(v1.x, v2),
+            min(v1.y, v2),
+            min(v1.z, v2)
+        );
+    }
+
+    template<typename T>
+    constexpr Vec3<T> min(T v1, const Vec3<T>& v2)
+    {
+        return Vec3<T>(
+            min(v1, v2.x),
+            min(v1, v2.y),
+            min(v1, v2.z)
+        );
+    }
+
+    template<typename T>
     constexpr Vec3<T> max(const Vec3<T>& v1, const Vec3<T>& v2)
     {
         return Vec3<T>(
@@ -2167,6 +2223,27 @@ namespace axium
             max(v1.z, v2.z)
         );
     }
+
+    template<typename T>
+    constexpr Vec3<T> max(const Vec3<T>& v1, T v2)
+    {
+        return Vec3<T>(
+            max(v1.x, v2),
+            max(v1.y, v2),
+            max(v1.z, v2)
+        );
+    }
+
+    template<typename T>
+    constexpr Vec3<T> max(T v1, const Vec3<T>& v2)
+    {
+        return Vec3<T>(
+            max(v1, v2.x),
+            max(v1, v2.y),
+            max(v1, v2.z)
+        );
+    }
+
 
     template<typename T>
     constexpr Vec3<T> clamp(const Vec3<T>& v, T min, T max)
@@ -2882,6 +2959,28 @@ namespace axium
     }
 
     template<typename T>
+    constexpr Vec4<T> min(const Vec4<T>& v1, T v2)
+    {
+        return Vec4<T>(
+            min(v1.x, v2),
+            min(v1.y, v2),
+            min(v1.z, v2),
+            min(v1.w, v2)
+        );
+    }
+
+    template<typename T>
+    constexpr Vec4<T> min(T v1, const Vec4<T>& v2)
+    {
+        return Vec4<T>(
+            min(v1, v2.x),
+            min(v1, v2.y),
+            min(v1, v2.z),
+            min(v1, v2.w)
+        );
+    }
+
+    template<typename T>
     constexpr Vec4<T> max(const Vec4<T>& v1, const Vec4<T>& v2)
     {
         return Vec4<T>(
@@ -2889,6 +2988,28 @@ namespace axium
             max(v1.y, v2.y),
             max(v1.z, v2.z),
             max(v1.w, v2.w)
+        );
+    }
+
+    template<typename T>
+    constexpr Vec4<T> max(const Vec4<T>& v1, T v2)
+    {
+        return Vec4<T>(
+            max(v1.x, v2),
+            max(v1.y, v2),
+            max(v1.z, v2),
+            max(v1.w, v2)
+        );
+    }
+
+    template<typename T>
+    constexpr Vec4<T> max(T v1, const Vec4<T>& v2)
+    {
+        return Vec4<T>(
+            max(v1, v2.x),
+            max(v1, v2.y),
+            max(v1, v2.z),
+            max(v1, v2.w)
         );
     }
 
