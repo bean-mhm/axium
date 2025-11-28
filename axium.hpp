@@ -1,4 +1,4 @@
-// axium 0.1.0
+// axium 0.2.0
 // https://github.com/bean-mhm/axium
 //
 // axium (stylized as lowercase) is a single-header C++ math library providing
@@ -84,15 +84,15 @@ namespace axium
 
     // for use in to_string()
     template<std::floating_point T>
-    int32_t determine_precision_for_string(
+    i32 determine_precision_for_string(
         T v,
-        int32_t max_significant_digits = 4, // can only reduce decimal digits
-        int32_t min_precision = 1,
-        int32_t max_precision = 7
+        i32 max_significant_digits = 4, // can only reduce decimal digits
+        i32 min_precision = 1,
+        i32 max_precision = 7
     )
     {
         // this may be negative and it's intentional
-        int32_t n_integral_digits = (int32_t)std::floor(std::log10(v)) + 1;
+        i32 n_integral_digits = (i32)std::floor(std::log10(v)) + 1;
 
         min_precision = std::max(min_precision, 0);
         max_precision = std::max(max_precision, min_precision);
@@ -113,14 +113,14 @@ namespace axium
     template<std::floating_point T>
     std::string to_string(
         T v,
-        int32_t max_significant_digits = 4, // can only reduce decimal digits
-        int32_t min_precision = 1,
-        int32_t max_precision = 7,
-        int32_t* out_precision = nullptr,
-        int32_t* out_n_trailing_zeros = nullptr
+        i32 max_significant_digits = 4, // can only reduce decimal digits
+        i32 min_precision = 1,
+        i32 max_precision = 7,
+        i32* out_precision = nullptr,
+        i32* out_n_trailing_zeros = nullptr
     )
     {
-        int32_t precision = determine_precision_for_string(
+        i32 precision = determine_precision_for_string(
             v,
             max_significant_digits,
             min_precision,
@@ -132,7 +132,7 @@ namespace axium
         std::string s = oss.str();
 
         // remove redundant trailing zeros after decimal point
-        int32_t n_trailing_zeros = 0;
+        i32 n_trailing_zeros = 0;
         if (precision > 0)
         {
             while (s.ends_with('0'))
@@ -1264,6 +1264,16 @@ namespace axium
             return 2;
         }
 
+        constexpr Mat<T, 1, 2> as_row() const
+        {
+            return Mat<T, 1, 2>(&x);
+        }
+
+        constexpr Mat<T, 2, 1> as_col() const
+        {
+            return Mat<T, 2, 1>(&x);
+        }
+
     };
 
     template<typename T>
@@ -1906,6 +1916,16 @@ namespace axium
         constexpr i32 n_components() const
         {
             return 3;
+        }
+
+        constexpr Mat<T, 1, 3> as_row() const
+        {
+            return Mat<T, 1, 3>(&x);
+        }
+
+        constexpr Mat<T, 3, 1> as_col() const
+        {
+            return Mat<T, 3, 1>(&x);
         }
 
     };
@@ -2607,6 +2627,16 @@ namespace axium
             return 4;
         }
 
+        constexpr Mat<T, 1, 4> as_row() const
+        {
+            return Mat<T, 1, 4>(&x);
+        }
+
+        constexpr Mat<T, 4, 1> as_col() const
+        {
+            return Mat<T, 4, 1>(&x);
+        }
+
     };
 
     template<typename T>
@@ -3085,20 +3115,20 @@ namespace axium
     class Quat
     {
     public:
-        base_vec4<T> v;
+        Vec4<T> v;
 
         constexpr Quat()
             : v(0, 0, 0, 1)
         {}
 
-        constexpr Quat(const base_vec4<T>& v)
+        constexpr Quat(const Vec4<T>& v)
             : v(v)
         {}
 
         template<std::floating_point U>
         constexpr operator Quat<U>() const
         {
-            return Quat<U>((base_vec4<U>)v);
+            return Quat<U>((Vec4<U>)v);
         }
 
         Quat(const Mat<T, 3, 3>& m)
@@ -4482,19 +4512,19 @@ namespace axium::transform
         r(0, 0) = a.x * a.x + (1 - a.x * a.x) * c;
         r(0, 1) = a.x * a.y * (1 - c) - a.z * s;
         r(0, 2) = a.x * a.z * (1 - c) + a.y * s;
-        r(0, 3) = 0;
+        r(0, 3) = (T)0;
 
         // second basis vector
         r(1, 0) = a.x * a.y * (1 - c) + a.z * s;
         r(1, 1) = a.y * a.y + (1 - a.y * a.y) * c;
         r(1, 2) = a.y * a.z * (1 - c) - a.x * s;
-        r(1, 3) = 0;
+        r(1, 3) = (T)0;
 
         // third basis vector
         r(2, 0) = a.x * a.z * (1 - c) - a.y * s;
         r(2, 1) = a.y * a.z * (1 - c) + a.x * s;
         r(2, 2) = a.z * a.z + (1 - a.z * a.z) * c;
-        r(2, 3) = 0;
+        r(2, 3) = (T)0;
 
         if (out_minv)
             *out_minv = transpose(r);
@@ -4519,7 +4549,7 @@ namespace axium::transform
         cam_to_world(0, 3) = pos.x;
         cam_to_world(1, 3) = pos.y;
         cam_to_world(2, 3) = pos.z;
-        cam_to_world(3, 3) = 1;
+        cam_to_world(3, 3) = (T)1;
 
         // initialize first three columns of viewing matrix
         Vec3<T> dir = normalize(look - pos);
@@ -4528,15 +4558,15 @@ namespace axium::transform
         cam_to_world(0, 0) = right.x;
         cam_to_world(1, 0) = right.y;
         cam_to_world(2, 0) = right.z;
-        cam_to_world(3, 0) = 0.;
+        cam_to_world(3, 0) = (T)0;
         cam_to_world(0, 1) = new_up.x;
         cam_to_world(1, 1) = new_up.y;
         cam_to_world(2, 1) = new_up.z;
-        cam_to_world(3, 1) = 0.;
+        cam_to_world(3, 1) = (T)0;
         cam_to_world(0, 2) = dir.x;
         cam_to_world(1, 2) = dir.y;
         cam_to_world(2, 2) = dir.z;
-        cam_to_world(3, 2) = 0.;
+        cam_to_world(3, 2) = (T)0;
 
         if (out_minv)
             *out_minv = cam_to_world;
@@ -4561,7 +4591,7 @@ namespace axium::transform
         const Vec2<T>& p
     )
     {
-        Vec3<T> r(m * Mat<T, 3, 1>(Vec3<T>(p, 1)));
+        Vec3<T> r(m * Mat<T, 3, 1>(Vec3<T>(p, (T)1)));
         if (r.z == 0)
             return r.permute(0, 1);
         else
@@ -4585,7 +4615,7 @@ namespace axium::transform
         const Vec3<T>& p
     )
     {
-        base_vec4<T> r(m * Mat<T, 4, 1>(base_vec4<T>(p, 1)));
+        Vec4<T> r(m * Mat<T, 4, 1>(Vec4<T>(p, (T)1)));
         if (r.w == 0)
             return r.permute(0, 1, 2);
         else
@@ -4848,14 +4878,14 @@ namespace axium::transform
     template<std::floating_point T>
     constexpr bool swaps_handedness_3d(const Mat<T, 3, 3>& m)
     {
-        return determinant(m) < 0;
+        return determinant(m) < (T)0;
     }
 
     // check if handedness is changed by a 3D homogeneous transformation matrix
     template<std::floating_point T>
     constexpr bool swaps_handedness_3d_h(const Mat<T, 4, 4>& m)
     {
-        return determinant(m.sub<3>()) < 0;
+        return determinant(m.sub<3>()) < (T)0;
     }
 
 }
