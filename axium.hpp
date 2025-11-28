@@ -1,4 +1,4 @@
-// axium 0.3.0
+// axium 0.4.0
 // https://github.com/bean-mhm/axium
 //
 // axium (stylized as lowercase) is a single-header C++ math library providing
@@ -1397,6 +1397,12 @@ namespace axium
     }
 
     template<std::floating_point T>
+    inline Vec2<T> pow(T v1, const Vec2<T>& v2)
+    {
+        return Vec2<T>(pow(v1, v2.x), pow(v1, v2.y));
+    }
+
+    template<std::floating_point T>
     inline Vec2<T> exp(const Vec2<T>& v)
     {
         return Vec2<T>(exp(v.x), exp(v.y));
@@ -1478,6 +1484,12 @@ namespace axium
     inline Vec2<T> mod(const Vec2<T>& v1, T v2)
     {
         return Vec2<T>(mod(v1.x, v2), mod(v1.y, v2));
+    }
+
+    template<std::floating_point T>
+    inline Vec2<T> mod(T v1, const Vec2<T>& v2)
+    {
+        return Vec2<T>(mod(v1, v2.x), mod(v1, v2.y));
     }
 
     template<std::floating_point T>
@@ -1615,6 +1627,12 @@ namespace axium
     )
     {
         return clamp01((v - a_start) / (a_end - a_start));
+    }
+
+    template<typename T>
+    constexpr Vec2<T> step(const Vec2<T>& edge, const Vec2<T>& v)
+    {
+        return Vec2<T>(step(edge.x, v.x), step(edge.y, v.y));
     }
 
     template<typename T>
@@ -2087,6 +2105,12 @@ namespace axium
     }
 
     template<std::floating_point T>
+    inline Vec3<T> pow(T v1, const Vec3<T>& v2)
+    {
+        return Vec3<T>(pow(v1, v2.x), pow(v1, v2.y), pow(v1, v2.z));
+    }
+
+    template<std::floating_point T>
     inline Vec3<T> exp(const Vec3<T>& v)
     {
         return Vec3<T>(exp(v.x), exp(v.y), exp(v.z));
@@ -2170,6 +2194,12 @@ namespace axium
     inline Vec3<T> mod(const Vec3<T>& v1, T v2)
     {
         return Vec3<T>(mod(v1.x, v2), mod(v1.y, v2), mod(v1.z, v2));
+    }
+
+    template<std::floating_point T>
+    inline Vec3<T> mod(T v1, const Vec3<T>& v2)
+    {
+        return Vec3<T>(mod(v1, v2.x), mod(v1, v2.y), mod(v1, v2.z));
     }
 
     template<std::floating_point T>
@@ -2317,6 +2347,12 @@ namespace axium
     )
     {
         return clamp01((v - a_start) / (a_end - a_start));
+    }
+
+    template<typename T>
+    constexpr Vec3<T> step(const Vec3<T>& edge, const Vec3<T>& v)
+    {
+        return Vec3<T>(step(edge.x, v.x), step(edge.y, v.y), step(edge.z, v.z));
     }
 
     template<typename T>
@@ -2841,6 +2877,14 @@ namespace axium
     }
 
     template<std::floating_point T>
+    inline Vec4<T> pow(T v1, const Vec4<T>& v2)
+    {
+        return Vec4<T>(
+            pow(v1, v2.x), pow(v1, v2.y), pow(v1, v2.z), pow(v1, v2.w)
+        );
+    }
+
+    template<std::floating_point T>
     inline Vec4<T> exp(const Vec4<T>& v)
     {
         return Vec4<T>(exp(v.x), exp(v.y), exp(v.z), exp(v.w));
@@ -2930,6 +2974,14 @@ namespace axium
     {
         return Vec4<T>(
             mod(v1.x, v2), mod(v1.y, v2), mod(v1.z, v2), mod(v1.w, v2)
+        );
+    }
+
+    template<std::floating_point T>
+    inline Vec4<T> mod(T v1, const Vec4<T>& v2)
+    {
+        return Vec4<T>(
+            mod(v1, v2.x), mod(v1, v2.y), mod(v1, v2.z), mod(v1, v2.w)
         );
     }
 
@@ -3091,6 +3143,17 @@ namespace axium
     )
     {
         return clamp01((v - a_start) / (a_end - a_start));
+    }
+
+    template<typename T>
+    constexpr Vec4<T> step(const Vec4<T>& edge, const Vec4<T>& v)
+    {
+        return Vec4<T>(
+            step(edge.x, v.x),
+            step(edge.y, v.y),
+            step(edge.z, v.z),
+            step(edge.w, v.w)
+        );
     }
 
     template<typename T>
